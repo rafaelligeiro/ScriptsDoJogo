@@ -9,6 +9,7 @@ public class PlayerProtect : MonoBehaviour
     public GameObject Shield;
     private Animator anim;
     public Slider staminaBar;
+    public GameObject stamina;
     
 
     void Start()
@@ -20,17 +21,36 @@ public class PlayerProtect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if(Input.GetKey("e"))
+       if(Input.GetKeyDown("e"))
         {
-            ProtectProguessBar.instance.UseStamina(1f);
+            ProtectProguessBar.instance.UseStamina(15);
             anim.SetBool("block", true);
             Shield.gameObject.SetActive(true);
-        } else {
-            anim.SetBool("block", false);
-            Shield.gameObject.SetActive(false);
         }
-        
-        if(staminaBar.value == 0)
+
+        if (Input.GetAxis("Horizontal") > 0)
+            {
+                anim.SetBool("Run", true);
+                anim.SetBool("block", false);
+                Shield.gameObject.SetActive(false);
+
+            }
+
+        if (Input.GetAxis("Horizontal") < 0)
+            {
+                anim.SetBool("Run", true);
+                anim.SetBool("block", false);
+                Shield.gameObject.SetActive(false);
+
+            }
+
+        if(Input.GetKeyUp("e"))
+            {
+             anim.SetBool("block", false);
+             Shield.gameObject.SetActive(false);
+            }
+
+        if(staminaBar.value < 15)
             {
               anim.SetBool("block", false);  
             }
@@ -40,7 +60,6 @@ public class PlayerProtect : MonoBehaviour
             anim.SetBool("block", false);
             }
     }
-
 
    
 }

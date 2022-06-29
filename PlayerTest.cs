@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour
+public class PlayerTest : MonoBehaviour
 {
 
 
@@ -18,14 +18,11 @@ public class Player : MonoBehaviour
     public float fallMultiplier = 10f;
     public float linearDrag = 4f;
     public Vector2 direction;
-    public GameObject Tutorial;
-    public GameObject BloodPlayer;
     
 
     // Start is called before the first frame update
     void Start()
     {
-        this.gameObject.SetActive(true);
         rig = GetComponent<Rigidbody2D>();
         animation = GetComponent<Animator>();
     }
@@ -35,16 +32,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(this == null)
-            {
-             BloodPlayer.gameObject.SetActive(true);
-            }
+
         direction = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-    
-        if (Tutorial == null)
-        {
-        Move();
-        } 
+
 
         //Jump
         OnGround = Physics2D.Raycast(transform.position, Vector2.down, CompGround, groundLayer);

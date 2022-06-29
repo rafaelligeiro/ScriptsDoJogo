@@ -13,6 +13,7 @@ public class Player1Attack : MonoBehaviour
     public LayerMask EnemyLayers;
     public int DanoAtaque = 1;
     public AudioSource hitSound, Bloodsound;
+    public ParticleSystem bloodEffect;
 
 
 
@@ -30,6 +31,7 @@ public class Player1Attack : MonoBehaviour
     {
          if (Input.GetMouseButtonDown(0))
         {
+        animation.SetTrigger("Attack_1");
         hitSound.Play();
         OnKeyPressed?.Invoke(this, EventArgs.Empty);
         }
@@ -38,14 +40,12 @@ public class Player1Attack : MonoBehaviour
 
     private void Attack_OnKeyPressed(object sender, EventArgs e)
     {
-    
-    animation.SetTrigger("Attack_1");
-    
    Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, AttackRange, EnemyLayers);
 
         foreach(Collider2D enemy in hitEnemies)
         {
             Bloodsound.Play();
+            bloodEffect.Play();
             enemy.GetComponent<EnemyAI>().TakeDamage(DanoAtaque);
         }
  

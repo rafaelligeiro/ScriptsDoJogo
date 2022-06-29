@@ -16,6 +16,7 @@ public class ScriptChanger : MonoBehaviour
         anim = GetComponent<Animator>(); 
         this.GetComponent<ShotgunPlayerAttack>().enabled = false;
         this.GetComponent<BloodyShotgun>().enabled = false;
+        this.GetComponent<PlayerProtect>().enabled = true;
     }
 
     // Update is called once per frame
@@ -25,28 +26,26 @@ public class ScriptChanger : MonoBehaviour
             {
                 anim.SetTrigger("ShotgunAppear");
                 anim.SetBool("ShotgunIDLE", true);
-                anim.SetBool("Run", false);
-                this.GetComponent<PlayerBloodyAttack>().enabled = false;
                 this.GetComponent<PlayerBloodyScript>().enabled = false;
+                this.GetComponent<PlayerBloodyAttack>().enabled = false;
                 this.GetComponent<BloodyShotgun>().enabled = true;
                 cham = false;
             if(currentBulletBar.fillAmount > 0)
                 {
                     this.GetComponent<ShotgunPlayerAttack>().enabled = true;
-                } else {
-                    this.GetComponent<ShotgunPlayerAttack>().enabled = false;
                 }
             }
         
-        else if(Input.GetKeyDown("g") && cham == false)
+        else if(Input.GetButtonDown("Fire1") && cham == false)
             {
                 anim.SetBool("ShotgunIDLE", false);
-                this.GetComponent<PlayerBloodyAttack>().enabled = true;
+                anim.SetBool("ShotgunRun", false);
+                anim.SetBool("Run", true);
                 this.GetComponent<PlayerBloodyScript>().enabled = true;
+                this.GetComponent<PlayerBloodyAttack>().enabled = true;
                 this.GetComponent<BloodyShotgun>().enabled = false;
                 cham = true;
             }
-
 
     }
 }

@@ -6,6 +6,7 @@ public class Tutorial2 : MonoBehaviour
 {
    
    public GameObject PopUp2, enemy;
+   public GameObject PlayerBlood;
 
 
     void Start()
@@ -19,6 +20,7 @@ public class Tutorial2 : MonoBehaviour
         if (enemy == null)
             {
                 PopUp2.gameObject.SetActive(true);
+                PlayerBlood.gameObject.SetActive(true);
 
                 StartCoroutine(timeOfPopUp());
             }

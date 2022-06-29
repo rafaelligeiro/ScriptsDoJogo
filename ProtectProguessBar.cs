@@ -11,7 +11,7 @@ public class ProtectProguessBar : MonoBehaviour
    private int maxStamina = 100;
    private int currentStamina;
 
-   private WaitForSeconds regenTick = new WaitForSeconds(0.1f);
+   private WaitForSeconds regenTick = new WaitForSeconds(.1f);
    private Coroutine regen;
    
    public static ProtectProguessBar instance;
@@ -31,46 +31,19 @@ public class ProtectProguessBar : MonoBehaviour
             staminaBar.value = maxStamina;
          }
 
-      public void UseStamina(float amount)
+      public void UseStamina(int amount)
          {
             if(currentStamina - amount >= 0)
                {
-                  currentStamina -= maxStamina / 100;
+                  currentStamina -= amount;
                   staminaBar.value = currentStamina;
-
-                  if(regen != null)
-                     {
-                        StopCoroutine(regen);
-                     }
-                 regen = StartCoroutine(RegenStamina());
-               } else{
-
-                  StartCoroutine(AnimStopFix());
-                  Debug.Log("Can't protect!");
-               }
          }
-
-
-      IEnumerator AnimStopFix()
-         {
-         yield return new WaitForSeconds(1f);
-         Ref.GetComponent<PlayerProtect>().enabled = false;
          }
 
 
 
-      IEnumerator RegenStamina() 
+        public void AddStamina(int _value)
          {
-            yield return new WaitForSeconds(2f);
-
-            while (currentStamina < maxStamina)
-               {
-                  currentStamina += maxStamina / 100;
-                  staminaBar.value = currentStamina;
-                  yield return regenTick;
-                  Ref.GetComponent<PlayerProtect>().enabled = true;
-               }
-
-            regen = null;
+         currentStamina = Mathf.Clamp(currentStamina + _value, 0, maxStamina);
          }
 }

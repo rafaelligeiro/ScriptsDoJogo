@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using Cinemachine;
 
-public class PlayerBloodyAttack : MonoBehaviour
+public class PlayerBloodyAttackNewScene : MonoBehaviour
 {
 
 
@@ -16,10 +16,7 @@ public class PlayerBloodyAttack : MonoBehaviour
     public int DanoAtaque = 1;
     public AudioSource swordSound, swordSound2, bloodSound;
     public Vector3 attackOffset;
-	public LayerMask attackBoss;
-    public Rigidbody2D Boss;
-    public bool PlayerAttack = false;
-    public Collider2D BossCollider;
+    public float Force;
 
 
     public event EventHandler OnKeyPressed;    
@@ -27,6 +24,7 @@ public class PlayerBloodyAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         animation = GetComponent<Animator>();
         OnKeyPressed += Attack_OnKeyPressed;
         swordSound.Stop();
@@ -44,21 +42,9 @@ public class PlayerBloodyAttack : MonoBehaviour
             swordSound.Play();
             animation.SetTrigger("Attack");
             OnKeyPressed?.Invoke(this, EventArgs.Empty);
-            Attack();
-            PlayerAttack = true;
-            StartCoroutine(StopAttack());
-
         }
-
-
-        IEnumerator StopAttack()
-            {
-                BossCollider.enabled = false;
-                yield return new WaitForSeconds(0.5f);
-                BossCollider.enabled = true; 
-            }
-
      
+
          if (Input.GetMouseButton(0) && Input.GetKey("w"))
         {
             swordSound2.Play();
@@ -77,22 +63,11 @@ public class PlayerBloodyAttack : MonoBehaviour
                 if (hitEnemies != null)
 	    	{
 		    	bloodSound.Play();
-                hitEnemies.GetComponent<EnemyAI>().TakeDamage(DanoAtaque);
+                hitEnemies.GetComponent<EnemyNewScene>().TakeDamage(DanoAtaque);
       		}
 
 
          }
-
-    public void Attack()
-	{
-		Collider2D colInfo = Physics2D.OverlapCircle(attackPoint.position, attackRange, attackBoss);
-		if (colInfo != null)
-		{
-            Debug.Log("HIT WORKING");
-			colInfo.GetComponent<BossHealth>().TakeDamage(DanoAtaque);
-
-		}
-	}
 
      void OnDrawGizmosSelected()
 	{

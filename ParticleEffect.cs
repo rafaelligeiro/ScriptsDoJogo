@@ -19,7 +19,7 @@ public class ParticleEffect : MonoBehaviour
        for (int i = 0; i < count; i++)
        {
            GameObject splat = Instantiate(splatPrefab, collisionEvents[i].intersection, Quaternion.identity) as GameObject;
-           splat.transform.SetParent(splatHolder, true);
+           //splat.transform.SetParent(splatHolder, true);
            BloodEffect Script = splat.GetComponent<BloodEffect>();
            Script.Initialize(BloodEffect.SplatLocation.Ground);
        }

@@ -26,20 +26,16 @@ public class PlayerBloodyScript : MonoBehaviour
     public float AttackRange = 0.5f;
     public LayerMask EnemyLayers;
     public int DanoAtaque = 1;
-    public GameObject Dialogue;
     public GameObject Shield;
-    public GameObject HighGround;
-    public GameObject HighGroundCheck;
     public AudioSource runningSound;
     public bool walking;
-    
 
     // Start is called before the first frame update
     void Start()
     {
         rig = GetComponent<Rigidbody2D>();
         animation = GetComponent<Animator>(); 
-        OnKeyPressed += Attack_OnKeyPressed;
+       // OnKeyPressed += Attack_OnKeyPressed;
     }
 
 
@@ -69,12 +65,10 @@ public class PlayerBloodyScript : MonoBehaviour
           if (!OnGround)
         {
             animation.SetBool("Jump", true);
-            Shield.gameObject.SetActive(true);
         }
         else
         {
             animation.SetBool("Jump", false);
-            Shield.gameObject.SetActive(false);
         }
 
      
@@ -133,17 +127,6 @@ public class PlayerBloodyScript : MonoBehaviour
                 animation.ResetTrigger("Attack3");
                 }
         }
-
-        private void Attack_OnKeyPressed(object sender, EventArgs e)
-         {
-    
-                Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, AttackRange, EnemyLayers);
-
-                  foreach(Collider2D enemy in hitEnemies)
-                {
-                  enemy.GetComponent<EnemyAI>().TakeDamage(DanoAtaque);
-                  }
-         }
 
     void GravityScale()
     {

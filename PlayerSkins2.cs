@@ -12,7 +12,7 @@ public class PlayerSkins2 : MonoBehaviour
     public GameObject NormalSkin, NormalSkinBlood;
     public GameObject NormalHealth, BloodHealth;
     public GameObject OtherSwitch;
-    public Transform FollowTarget1, background;
+    public Transform FollowTarget1;
     public ParticleSystem BloodShit;
     int SkinAtual = 1;
     public bool Cam1Check = true;
@@ -47,10 +47,8 @@ public class PlayerSkins2 : MonoBehaviour
     {
         if (BloodShit.isPlaying)
         {
-            //SkinSwitch();
-            BloodShit.Stop();
+            Debug.Log("Working");
             NormalSkinBlood.transform.position = new Vector3(NormalSkin.transform.position.x, NormalSkin.transform.position.y, NormalSkin.transform.position.z);
-            yield return new WaitForSeconds(0.40f);
             SkinAtual = 2;
             NormalSkin.gameObject.SetActive(false);
             NormalHealth.gameObject.SetActive(false);
@@ -58,8 +56,10 @@ public class PlayerSkins2 : MonoBehaviour
             BloodHealth.gameObject.SetActive(true);
             OtherSwitch.gameObject.SetActive(true);
             FollowTarget1 = NormalSkinBlood.transform;
-            CM_cam1.LookAt = background;
+            CM_cam1.LookAt = FollowTarget1;
             CM_cam1.Follow = FollowTarget1;
+            yield return new WaitForSeconds(0.40f);
+            BloodShit.Stop();
             Destroy(gameObject);
         }
     }

@@ -14,6 +14,7 @@ public class ProjectileEnemy : MonoBehaviour
    public GameObject BackDamage;
    public Rigidbody2D rb;
    public float Force;
+   public Collider2D PlayerCollider;
    
 
 
@@ -26,7 +27,6 @@ public class ProjectileEnemy : MonoBehaviour
 
    void Update()
    {
-       //transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
 
         rb.velocity = transform.right * speed;
 
@@ -39,6 +39,12 @@ public class ProjectileEnemy : MonoBehaviour
             {
               this.gameObject.SetActive(false);  
             }
+
+
+            if(PlayerCollider.enabled = false)
+        {
+          Destroy(gameObject);
+        }
    }
 
     void OnTriggerEnter2D(Collider2D collision) 
@@ -57,12 +63,25 @@ public class ProjectileEnemy : MonoBehaviour
                 collision.GetComponent<Health>().TakeDamage(damageAmount);       
         }
 
+        if(collision.CompareTag("Player2"))
+            {
+                Rigidbody2D Player = collision.GetComponent<Rigidbody2D>();
+                if(Player != null)  
+                {
+                    Vector2 difference = Player.transform.position - transform.position;
+                    difference = difference.normalized * Force;
+                    Player.AddForce(difference, ForceMode2D.Impulse);
+                }
+                DestroyProjectile();
+                Debug.Log("Playerhit");
+                collision.GetComponent<Health>().TakeDamage3(damageAmount);       
+        }
+
         if (collision.CompareTag("Shield"))
             {
                 DestroyProjectile();
             }
     }
-
 
     public void DestroyProjectile()
     {
