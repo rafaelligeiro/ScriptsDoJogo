@@ -27,13 +27,17 @@ public class BirdFly : MonoBehaviour
         Vector3 direction = SpotToGo.position - transform.position;
         movement = direction;
         Vector2 force = direction * moveSpeed * Time.deltaTime;
+        } else {
+            return;
         }
 
         if(this != null && Dialogue.activeSelf)
             {
             
                 StartCoroutine(animStart());
-            }
+            } else if(this == null){
+            return;
+        }
 
     }
 

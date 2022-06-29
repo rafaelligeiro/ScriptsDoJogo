@@ -7,7 +7,6 @@ public class BulletScript : MonoBehaviour
     public float speed = 20f;
     public Rigidbody2D rb;
     public int dano = 1;
-    public AudioSource HitSound;
 
     // Start is called before the first frame update
     void Start()
@@ -22,8 +21,14 @@ public class BulletScript : MonoBehaviour
        EnemyAI enemy =  HitInfo.GetComponent<EnemyAI>();
        if (enemy != null)
         {
-            HitSound.Play();
             enemy.TakeDamage(1);
+        }
+        Destroy(gameObject);
+
+        BossHealth boss =  HitInfo.GetComponent<BossHealth>();
+       if (boss != null)
+        {
+            boss.TakeDamage(2);
         }
         Destroy(gameObject);
     }

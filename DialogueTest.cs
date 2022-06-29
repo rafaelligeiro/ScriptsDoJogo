@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class DialogueScript : MonoBehaviour
+public class DialogueTest : MonoBehaviour
 {
     public GameObject dialogue;
     public GameObject BloodPlayer;
@@ -13,7 +13,6 @@ public class DialogueScript : MonoBehaviour
     public CinemachineVirtualCameraBase CM_cam1, CM_cam2;
     public GameObject NPCSprite;
     public GameObject FinalDialogue;
-    public GameObject Tutorial3;
     public GameObject BulletVisual;
     public GameObject piupiu;
     public GameObject GameSong;
@@ -32,10 +31,10 @@ public class DialogueScript : MonoBehaviour
         BloodPlayerDialogue.gameObject.SetActive(false);
         FollowTarget1 = BloodPlayer.transform;
         CM_cam1.LookAt = FollowTarget1;
-        Tutorial3.gameObject.SetActive(false);
         BulletVisual.gameObject.SetActive(false);
         piupiu.gameObject.SetActive(false);
         GameSound.gameObject.SetActive(false);
+        BloodPlayer.gameObject.SetActive(true);
     }
     void Update()
         {
@@ -65,7 +64,6 @@ public class DialogueScript : MonoBehaviour
                 CM_cam2.Priority = 0;
                 Destroy(dialogue);
                 BloodPlayer.GetComponent<ScriptChanger>().enabled = true;
-                Tutorial3.gameObject.SetActive(true);
                 BulletVisual.gameObject.SetActive(true);
                 Destroy(gameObject);
             }

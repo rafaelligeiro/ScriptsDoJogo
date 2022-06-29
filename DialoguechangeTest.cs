@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogueChange : MonoBehaviour
+public class DialoguechangeTest : MonoBehaviour
 {
     [SerializeField] private Dialog_Effect Efeito;
 
     public Text Text1, Text2, Text3, Text4, Text5, Text6, Text7;
-    public GameObject Line1, Line2, Line3, Line4, Line5, Line6, Line7, dialogueBox, player, BloodPlayersprite;
+    public GameObject Line1, Line2, Line3, Line4, Line5, Line6, Line7, player, BloodPlayersprite, tutorial3;
 
     // Start is called before the first frame update
     void Start()
@@ -66,7 +66,7 @@ public class DialogueChange : MonoBehaviour
                     else if(Line7.activeSelf)
                     {
                      Line7.gameObject.SetActive(false);
-                     dialogueBox.gameObject.SetActive(true);
+                     tutorial3.gameObject.SetActive(true);
                      player.gameObject.SetActive(true);
                      BloodPlayersprite.gameObject.SetActive(false);
                      Destroy(gameObject);

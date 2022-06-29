@@ -5,6 +5,7 @@ using UnityEngine;
 public class enemyspawner : MonoBehaviour
 {
 
+    private Animator anim;
     private float fadeTime = 3f;
     public enum SpawnState{spawning, waiting, counting};
     public GameObject spawner;
@@ -40,7 +41,8 @@ public class enemyspawner : MonoBehaviour
                     Debug.LogError("Define os SpawnPoints");
                 }
 
-                
+        anim = GetComponent<Animator>();
+
         waveCountdown = timeBTWWaves;
 
 

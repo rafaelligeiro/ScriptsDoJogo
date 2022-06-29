@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class EnemyAI : MonoBehaviour
     public float retreatDistance;
     public Transform shotpoint;
     private Animator anim;
+    public GameObject CMFinal;
     
     void Start()
     {
@@ -49,9 +51,18 @@ public class EnemyAI : MonoBehaviour
      
     }
 
+
+    IEnumerator OtherAnimations()
+        {
+            yield return new WaitForSeconds(2f);
+            MoveEnemy(movement);
+        }
+
+
+
     void FixedUpdate()
     {
-        MoveEnemy(movement);
+        StartCoroutine(OtherAnimations());
     }
 
     void MoveEnemy(Vector2 direction)
@@ -61,20 +72,20 @@ public class EnemyAI : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
         anim.SetBool("Walk", true);
         anim.SetBool("skeletonAttackPose", false);
-        TimeBtwnShots = 0.5f;
+        TimeBtwnShots = 0.1f;
 
      } else if(Vector2.Distance(transform.position, player.position) < stopping && Vector2.Distance(transform.position, player.position) > retreatDistance)
         {
            transform.position = this.transform.position;
            anim.SetBool("skeletonAttackPose", true);
            anim.SetBool("Walk", false);
-           StartTimeBtwShots = 1f;
+           StartTimeBtwShots = 0.5f;
            TimeBtwnShots -= Time.deltaTime; 
 
         } else if(Vector2.Distance(transform.position, player.position) < retreatDistance)
             {
             transform.position = Vector2.MoveTowards(transform.position, player.position, -moveSpeed * Time.deltaTime);
-            TimeBtwnShots = 1f;
+            TimeBtwnShots = 0.5f;
             }
        
 
@@ -84,15 +95,20 @@ public class EnemyAI : MonoBehaviour
                 Instantiate(projectile, shotpoint.transform.position, transform.rotation * Quaternion.Euler(0f, 0f, 180f));
                 anim.SetBool("skeletonAttackPose", true);
                 anim.SetBool("Walk", false);
-                TimeBtwnShots = 1f;
+                TimeBtwnShots = 0.5f;
 
             } else if(TimeBtwnShots <= 0 && Vector2.Distance(transform.position, player.position) > stopping && Vector2.Distance(transform.position, player.position) > retreatDistance)
                 {
                     transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
                     anim.SetBool("Walk", true);
                     anim.SetBool("skeletonAttackPose", false);
-                    TimeBtwnShots = 1f;
+                    TimeBtwnShots = 0.5f;
                 }
+
+        if(CMFinal.activeSelf)
+            {
+              this.GetComponent<EnemyAI>().enabled = false;  
+            }
     }
 
     
